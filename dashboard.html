@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RelayBot Dashboard</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+
+    <h1>RelayBot Live Telemetry</h1>
+
+    <div class="card">
+
+        <div class="label">Left Speed</div>
+        <div id="left" class="value">--</div>
+        <div class="speed-bar">
+            <div id="left-bar" class="fill"></div>
+        </div>
+
+        <div class="label">Right Speed</div>
+        <div id="right" class="value">--</div>
+        <div class="speed-bar">
+            <div id="right-bar" class="fill"></div>
+        </div>
+
+        <div class="label">State</div>
+        <div id="state" class="state">--</div>
+
+        <div id="timestamp" class="timestamp">Waiting for data...</div>
+    </div>
+
+    <script>
+        async function update() {
+            try {
+                const res = await fetch("/latest");
+                const data = await res.json();
+
+                if (data.status === "no data yet") {
+                    document.getElementById("timestamp").textContent = "No data yet";
+                    return;
+                }
+
+                // Update text values
+                document.getElementById("left").textContent = data.left;
+                document.getElementById("right").textContent = data.right;
+                document.getElementById("state").textContent = data.state;
+                document.getElementById("timestamp").textContent = "Updated: " + data.timestamp;
+
+                // Update speed bars (max speed assumed 255)
+                const leftPercent = Math.min((data.left / 255) * 100, 100);
+                const rightPercent = Math.min((data.right / 255) * 100, 100);
+
+                document.getElementById("left-bar").style.width = leftPercent + "%";
+                document.getElementById("right-bar").style.width = rightPercent + "%";
+
+            } catch (e) {
+                document.getElementById("timestamp").textContent = "Error fetching data";
+            }
+        }
+
+        setInterval(update, 200);
+        update();
+    </script>
+
+</body>
+</html>

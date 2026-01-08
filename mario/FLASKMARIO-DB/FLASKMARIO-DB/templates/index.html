@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid Builder</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <h1>Pyramid Builder</h1>
+    <form method="post">
+        <div class="form-group">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="height">Enter a height (1-8):</label>
+            <input type="number" id="height" name="height" min="1" max="8" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Build Pyramid</button>
+        </div>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if pyramid %}
+        <h2>Hi {{ name }}, here's your pyramid:</h2>
+        <p class="pyramid">{{ pyramid|safe }}</p>
+    {% endif %}
+
+    <h2>Past Submissions:</h2>
+    <ul>
+        {% for submission in submissions %}
+            <li>{{ submission[0] }} built a pyramid of height {{ submission[1] }}:</li>
+            <pre>{{ submission[2]|safe }}</pre>
+        {% endfor %}
+    </ul>
+</body>
+</html>
