@@ -1,9 +1,15 @@
 from flask import Flask, request, jsonify, render_template, g
 import sqlite3
+import requests
 
 app = Flask(__name__)
 
 DATABASE = "relaybot.db"
+
+# ---------------------------------------------------
+# RENDER ENDPOINT (replace with your real URL)
+# ---------------------------------------------------
+RENDER_URL = "https://git-test-pprd.onrender.com/relaybot-data"
 
 # ---------------------------------------------------
 # GET A NEW DB CONNECTION FOR EACH REQUEST
@@ -47,7 +53,7 @@ def init_db():
 init_db()
 
 # ---------------------------------------------------
-# RECEIVE TELEMETRY FROM ARDUINO
+# RECEIVE TELEMETRY FROM ARDUINO → STORE LOCALLY → FORWARD TO RENDER
 # ---------------------------------------------------
 @app.route("/relaybot-data", methods=["POST"])
 def relaybot_data():
@@ -59,25 +65,30 @@ def relaybot_data():
     if data is None:
         return jsonify({"status": "invalid json"}), 400
 
+    # ---- Store locally ----
     db = get_db()
     cur = db.cursor()
 
-    # Clear previous row
     cur.execute("DELETE FROM telemetry")
-
-    # Insert new telemetry
     cur.execute("""
         INSERT INTO telemetry (botID, left_speed, right_speed, state)
         VALUES (?, ?, ?, ?)
     """, (data["bot"], data["left"], data["right"], data["state"]))
-
     db.commit()
 
-    print("Received:", data)
+    print("Stored locally:", data)
+
+    # ---- Forward to Render ----
+    try:
+        r = requests.post(RENDER_URL, json=data, timeout=1)
+        print("Forwarded to Render:", r.status_code)
+    except Exception as e:
+        print("Render unreachable:", e)
+
     return jsonify({"status": "ok"})
 
 # ---------------------------------------------------
-# RETURN LATEST TELEMETRY
+# RETURN LATEST TELEMETRY (LOCAL)
 # ---------------------------------------------------
 @app.route("/latest")
 def latest():
