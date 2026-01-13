@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import sqlite3
 
 app = Flask(__name__)
@@ -83,14 +83,16 @@ def latest():
         "timestamp": row[3]
     })
 
-@app.route("/dashboard")
-def dashboard():
-    return open("dashboard.html").read()
 
 
 @app.route("/")
-def home():
-    return "Flask server is running"
+def index():
+    return render_template("index.html")
+
+
+@app.route("/dashboard")
+def dashboard():
+    return open("dashboard.html").read()
 
 # this allow us to run the app locally for testing
 if __name__ == "__main__":

@@ -1,0 +1,150 @@
+/* ===== Global Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ===== Page Background ===== */
+body {
+    background-color: #f6f7f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+    background-color: #ffffff;
+    padding: 18px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 600;
+    color: #222;
+}
+
+.navbar nav a {
+    margin-left: 28px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+}
+
+.navbar nav a:hover {
+    color: #000;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+    background: linear-gradient(135deg, #e8ebf0, #f6f7f9);
+    margin: 40px auto;
+    padding: 50px 60px;
+    max-width: 1100px;
+    border-radius: 12px;
+}
+
+.hero h1 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    max-width: 600px;
+    margin-bottom: 25px;
+    color: #555;
+}
+
+/* ===== Button (global) ===== */
+.btn {
+    display: inline-block;
+    padding: 10px 22px;
+    background-color: #25b3a3;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #9263b2;
+}
+
+/* ===== Bots Section ===== */
+.bots {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.bots h2 {
+    font-size: 22px;
+    margin-bottom: 30px;
+    color: #222;
+}
+
+/* ===== Bot Grid ===== */
+.bot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+/* ===== Bot Card ===== */
+.bot-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.bot-card h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/* ===== Image Placeholder ===== */
+.image-placeholder {
+    height: 200px;
+    background-color: #eef1f5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+/* ===== Status Section ===== */
+.status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* ===== Status Dots ===== */
+.dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.green {
+    background-color: #4caf50;
+}
+
+.yellow {
+    background-color: #ffb300;
+}
+
+.red {
+    background-color: #e53935;
+}
