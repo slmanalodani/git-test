@@ -7,7 +7,7 @@ app = Flask(__name__)
 DATABASE = "relaybot.db"
 
 # ---------------------------------------------------
-# RENDER ENDPOINT (replace with your real URL)
+# RENDER ENDPOINT 
 # ---------------------------------------------------
 RENDER_URL = "https://git-test-pprd.onrender.com/relaybot-data"
 
@@ -125,6 +125,14 @@ def dashboard():
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/team")
+def team():
+    return render_template("team.html")
+
+@app.route("/network")
+def network():
+    return render_template("network.html")
 
 # ---------------------------------------------------
 # RUN APP
