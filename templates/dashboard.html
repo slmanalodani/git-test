@@ -3,10 +3,22 @@
 <head>
     <title>RelayBot Dashboard</title>
     <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="stylesheet" href="/static/homestyle.css"> <!-- navbar styling -->
 </head>
 <body>
 
-    <h1>RelayBot Live Telemetry</h1>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">THE CIRCUIT SYNDICATE</div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="network.html">Network</a>
+            <a href="dashboard">Dashboard</a>
+            <a href="team.html">Team</a>
+        </nav>
+    </header>
+
+    <h1 style="margin-top: 40px;">RelayBot Live Telemetry</h1>
 
     <div class="card">
         
@@ -42,24 +54,20 @@
                     return;
                 }
 
-                // Update text values
                 document.getElementById("botID").textContent = data.bot;
                 document.getElementById("left").textContent = data.left;
                 document.getElementById("right").textContent = data.right;
                 document.getElementById("timestamp").textContent = "Updated: " + data.timestamp;
 
-                // Update speed bars
                 const leftPercent = Math.min((data.left / 255) * 100, 100);
                 const rightPercent = Math.min((data.right / 255) * 100, 100);
 
                 document.getElementById("left-bar").style.width = leftPercent + "%";
                 document.getElementById("right-bar").style.width = rightPercent + "%";
 
-                // ----- State badge with color coding -----
                 const stateEl = document.getElementById("state");
                 stateEl.textContent = data.state;
-
-                stateEl.className = "state"; // reset classes
+                stateEl.className = "state";
 
                 const s = data.state.toLowerCase();
 
@@ -67,6 +75,8 @@
                 else if (s.includes("obstacle")) stateEl.classList.add("state-obstacle");
                 else if (s.includes("done")) stateEl.classList.add("state-done");
                 else if (s.includes("search")) stateEl.classList.add("state-search");
+                else if (s.includes("running")) stateEl.classList.add("state-running");
+                else if (s.includes("turning")) stateEl.classList.add("state-turning");
 
             } catch (e) {
                 document.getElementById("timestamp").textContent = "Error fetching data";

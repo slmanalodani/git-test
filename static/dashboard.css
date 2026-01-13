@@ -67,6 +67,8 @@ h1 {
 .state-obstacle { background: #d29922; color: black; }
 .state-done { background: #238636; color: white; }
 .state-search { background: #a371f7; color: white; }
+.state-running { background: #2ea043; color: white; }
+.state-turning { background: #bf8700; color: white; }
 
 /* ---------- TIMESTAMP ---------- */
 .timestamp {

@@ -110,16 +110,15 @@ body {
     font-size: 18px;
 }
 
-/* ===== Image Placeholder ===== */
-.image-placeholder {
-    height: 200px;
-    background-color: #eef1f5;
+/* ===== Bot Image ===== */
+.bot-image {
+    width: 100%;
+    max-width: 180px;   /* keeps images small */
+    height: 150px;      /* consistent height */
+    object-fit: cover;  /* prevents stretching */
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #888;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
+    display: block;
 }
 
 /* ===== Status Section ===== */
