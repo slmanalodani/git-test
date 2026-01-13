@@ -15,6 +15,7 @@ cursor = conn.cursor() # Create a cursor object to execute SQL commands
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS telemetry (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    botID TEXT,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     left_speed INTEGER,
     right_speed INTEGER,
@@ -51,9 +52,9 @@ def relaybot_data():
 
     # Insert new row
     cursor.execute("""
-        INSERT INTO telemetry (left_speed, right_speed, state)
-        VALUES (?, ?, ?)
-    """, (data["left"], data["right"], data["state"]))
+        INSERT INTO telemetry (botID, left_speed, right_speed, state)
+        VALUES (?, ?, ?, ?)
+    """, (data["bot"], data["left"], data["right"], data["state"]))
 
     conn.commit()
 
@@ -66,7 +67,7 @@ def relaybot_data():
 @app.route("/latest", methods=["GET"])
 def latest():
     cursor.execute("""
-        SELECT left_speed, right_speed, state, timestamp
+        SELECT botID, left_speed, right_speed, state, timestamp
         FROM telemetry
         ORDER BY id DESC
         LIMIT 1
@@ -77,22 +78,20 @@ def latest():
         return jsonify({"status": "no data yet"})
 
     return jsonify({
-        "left": row[0],
-        "right": row[1],
-        "state": row[2],
-        "timestamp": row[3]
+        "bot": row[0],
+        "left": row[1],
+        "right": row[2],
+        "state": row[3],
+        "timestamp": row[4]
     })
 
-
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
 
 @app.route("/")
 def index():
     return render_template("index.html")
-
-
-@app.route("/dashboard")
-def dashboard():
-    return open("dashboard.html").read()
 
 # this allow us to run the app locally for testing
 if __name__ == "__main__":

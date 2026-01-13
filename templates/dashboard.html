@@ -9,6 +9,9 @@
     <h1>RelayBot Live Telemetry</h1>
 
     <div class="card">
+        
+        <div class="label">Bot</div>
+        <div id="botID" class="botID">--</div>
 
         <div class="label">Left Speed</div>
         <div id="left" class="value">--</div>
@@ -40,17 +43,30 @@
                 }
 
                 // Update text values
+                document.getElementById("botID").textContent = data.bot;
                 document.getElementById("left").textContent = data.left;
                 document.getElementById("right").textContent = data.right;
-                document.getElementById("state").textContent = data.state;
                 document.getElementById("timestamp").textContent = "Updated: " + data.timestamp;
 
-                // Update speed bars (max speed assumed 255)
+                // Update speed bars
                 const leftPercent = Math.min((data.left / 255) * 100, 100);
                 const rightPercent = Math.min((data.right / 255) * 100, 100);
 
                 document.getElementById("left-bar").style.width = leftPercent + "%";
                 document.getElementById("right-bar").style.width = rightPercent + "%";
+
+                // ----- State badge with color coding -----
+                const stateEl = document.getElementById("state");
+                stateEl.textContent = data.state;
+
+                stateEl.className = "state"; // reset classes
+
+                const s = data.state.toLowerCase();
+
+                if (s.includes("follow")) stateEl.classList.add("state-follow");
+                else if (s.includes("obstacle")) stateEl.classList.add("state-obstacle");
+                else if (s.includes("done")) stateEl.classList.add("state-done");
+                else if (s.includes("search")) stateEl.classList.add("state-search");
 
             } catch (e) {
                 document.getElementById("timestamp").textContent = "Error fetching data";
